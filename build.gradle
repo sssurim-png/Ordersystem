@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.10'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'com.beyond'
@@ -23,38 +24,43 @@ repositories {
 
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-   compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+        //spring 웹서비스(http)를 위한 기본 의존성
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+//    getter, setter등 개발의 편의성을 증대시켜주는 각종 어노테이션 포함하는 의존성
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    db 드라이버: mariadb, mysql, oracle 등
+        runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+////    db관리 기술:jdbc, mybatis, jpa(spring data jpa)
+//        implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+      //   jpa기반,DB접근 위한 의존성, 값 검증을위한 의존성
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+        //	로그인을 위한 security 의존성 //이거 한 이후에 예외(ex.로그인 화면 제외 해줘야한다 - security쪽)
+//    security의존성을 적용하자마자, 모든 api요청에 대해 로그인을요구(Authentication객체의  생성여부 확인) -중요!!
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+//	jwt토큰 관련 라이브러리 추가
+        implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+        runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+//    토큰의 JSON인코딩/디코딩, 직렬화/파싱에 필요
+        runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+// @Valid등 어노테이션
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    아래는 테스트코드 작성을 위한 의존성
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+//Bath의존성 추가(Scheduler)
+        implementation 'org.springframework.boot:spring-boot-starter-batch'
 
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+        //    파일처리를 위한 aws 의존성 추가
+        implementation 'software.amazon.awssdk:s3:2.29.50'
 
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
-
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    implementation 'org.springframework.boot:spring-boot-starter-batch'
-
-    implementation 'software.amazon.awssdk:s3:2.29.50'
-
-}
+    }
 
 tasks.named('test') {
     useJUnitPlatform()
