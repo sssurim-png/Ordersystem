@@ -1,9 +1,14 @@
 package com.example.post.order.domain;
 
-import com.example.post.common.DateTime;
+import com.example.post.common.domain.DateTime;
 import com.example.post.member.domain.Member;
+
 import jakarta.persistence.*;
 import lombok.*;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,14 +16,22 @@ import lombok.*;
 @Getter
 @ToString
 @Entity
-public class Orders extends DateTime {
+public class Ordering extends DateTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private OrderStatus orderStatus = OrderStatus.ORDERED;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id",foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),nullable = false)
     private Member member;
+
+    @OneToMany(mappedBy = "ordering",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     @Builder.Default
-    private Status status = Status.ORDERED;
+    List<OrderDetail> orderDetailList = new ArrayList<>();//ArrayList필수
+
 
 }

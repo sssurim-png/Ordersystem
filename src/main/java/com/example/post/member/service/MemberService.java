@@ -3,6 +3,7 @@ package com.example.post.member.service;
 import com.example.post.member.domain.Member;
 import com.example.post.member.dto.*;
 import com.example.post.member.repository.MemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,17 +30,18 @@ public class MemberService {
 
 
     //    1. 회원가입
-    public void save(CreateDto dto) {
+    public Long save(CreateDto dto) {
         if (memberRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 email입니다");
         }
         Member member = dto.toEntity(passwordEncoder.encode(dto.getPassword()));
         memberRepository.save(member);
+        return member.getId();
     }
 
 
     //    2. user로그인
-    public Member login(LoginDto dto) {
+    public Member login(MemberLoginReqDto dto) {
         Optional<Member> opt_member = memberRepository.findByEmail(dto.getEmail());
         boolean check = true;
         if (!opt_member.isPresent()) {
@@ -56,13 +58,13 @@ public class MemberService {
 
     }
 
-//    3. 회원목록조회
-    public List<ListDto> findAll(){
+//    3. 회원목록조회 //?맞겠지?
+    public List<MemberListDto> findAll(){
         List<Member> list = memberRepository.findAll();
-        List<ListDto> listdto = new ArrayList<>();
+        List<MemberListDto> listdto = new ArrayList<>();
 
         for(Member m : list){
-            ListDto dto = ListDto.fromEntity(m);
+            MemberListDto dto = MemberListDto.fromEntity(m);
             listdto.add(dto);
         }
         return listdto;
@@ -81,9 +83,9 @@ public class MemberService {
     }
 
 //    5. 회원 상세내역조회
-    public DetailDto findById(Long id){
-        Member member= memberRepository.findById(id).orElseThrow(()->new NoSuchElementException("회원이 없다"));
-        DetailDto dto = DetailDto.fromEntity(member);
+    public MemberDtailDto findById(Long id){
+        Member member= memberRepository.findById(id).orElseThrow(()->new EntityNotFoundException("회원이 없다"));
+        MemberDtailDto dto = MemberDtailDto.fromEntity(member);
         return dto;
     }
 

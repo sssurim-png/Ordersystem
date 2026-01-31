@@ -1,4 +1,4 @@
-package com.example.post.common.handler;
+package com.example.post.common.exception;
 
 
 import com.example.post.common.dto.CommonErrorDto;

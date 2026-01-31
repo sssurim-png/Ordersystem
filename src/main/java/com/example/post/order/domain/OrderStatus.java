@@ -1,5 +1,5 @@
 package com.example.post.order.domain;
 
-public enum Status {
+public enum OrderStatus {
     ORDERED, CANCLED;
 }

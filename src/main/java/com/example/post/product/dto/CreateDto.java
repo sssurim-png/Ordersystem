@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,19 +14,18 @@ import lombok.NoArgsConstructor;
 @Data
 public class CreateDto {
     private String name;
-    private int price;
     private String category;
+    private int price;
     private int stockQuantity;
-    private String productImage;
+    private MultipartFile productImage;
 
     public Product toEntity(Member member){
         return Product.builder()
-                .member(member)
                 .name(this.name)
                 .price(this.price)
                 .category(this.category)
                 .stockQuantity(this.stockQuantity)
-                .image_path(this.productImage)
+                .member(member) /// 이다가 다시
                 .build();
     }
 

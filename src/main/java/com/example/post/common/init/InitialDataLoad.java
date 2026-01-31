@@ -1,4 +1,4 @@
-package com.example.post.common;
+package com.example.post.common.init;
 
 
 import com.example.post.member.domain.Member;

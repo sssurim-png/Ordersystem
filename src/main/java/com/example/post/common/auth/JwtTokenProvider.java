@@ -1,4 +1,4 @@
-package com.example.post.common;
+package com.example.post.common.auth;
 
 
 import com.example.post.member.domain.Member;
@@ -9,10 +9,8 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
-import java.security.Signature;
 import java.util.Base64;
 import java.util.Date;
 

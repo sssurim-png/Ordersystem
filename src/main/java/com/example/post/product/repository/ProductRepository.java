@@ -1,17 +1,16 @@
 package com.example.post.product.repository;
 
-import com.example.post.member.dto.DetailDto;
-import com.example.post.member.dto.ListDto;
 import com.example.post.product.domain.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product,Long>{
     Optional<Product> findByName(String name);
+    //검색처리하려면 findAll 설정다시하기
 
 //    @Query("""
 //select new com.example.post.product.dto.DetailDto(
@@ -25,5 +24,5 @@ public interface ProductRepository extends JpaRepository<Product,Long>{
 //    from Product p
 //    """)
 //    Optional<DetailDto> findByDtailDto(@Param("id")Long id);
-
+Page<Product> findAll(Specification<Product> specification, Pageable pageable);
 }

@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class ListDto {
+public class MemberListDto {
     private Long id;
     private String name;
     private String email;
 
-    public static ListDto fromEntity(Member member){
-        return ListDto.builder()
+    public static MemberListDto fromEntity(Member member){
+        return MemberListDto.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())

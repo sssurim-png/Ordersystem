@@ -1,10 +1,7 @@
 package com.example.post.member.domain;
 
-import com.example.post.common.DateTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.post.common.domain.DateTime;
+import jakarta.persistence.*;
 import lombok.*;
 
 @AllArgsConstructor
@@ -20,6 +17,7 @@ public class Member extends DateTime {
     private String email;
     private String password;
     private String name;
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.USER;
 }

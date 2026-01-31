@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class DetailDto {
+public class MemberDtailDto {
     private Long id;
     private String name;
     private String email;
 
-    public static DetailDto fromEntity(Member member){
-        return DetailDto.builder()
+    public static MemberDtailDto fromEntity(Member member){
+        return MemberDtailDto.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())

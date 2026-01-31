@@ -1,6 +1,6 @@
 package com.example.post.product.domain;
 
-import com.example.post.common.DateTime;
+import com.example.post.common.domain.DateTime;
 import com.example.post.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;

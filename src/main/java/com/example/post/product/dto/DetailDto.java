@@ -29,21 +29,21 @@ public class DetailDto {
                 .build();
     }
 
-    public DetailDto(
-            Long id,
-            String name,
-            String category,
-            int price,
-            int stockQuantity,
-            String image_path
-    ) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.price = price;
-        this.stockQuantity = stockQuantity;
-        this.image_path = image_path;
-    }
+//    public DetailDto(
+//            Long id,
+//            String name,
+//            String category,
+//            int price,
+//            int stockQuantity,
+//            String image_path
+//    ) {
+//        this.id = id;
+//        this.name = name;
+//        this.category = category;
+//        this.price = price;
+//        this.stockQuantity = stockQuantity;
+//        this.image_path = image_path;
+//    }
 }
 
 

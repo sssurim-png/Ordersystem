@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Builder
-public class LoginDto {
-    private String email;
-    private String password;
-}
+    public class MemberLoginResDto{
+        private String accessToken;
+        private String refreshToken;
+
+    }
+

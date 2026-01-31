@@ -1,6 +1,6 @@
 package com.example.post.member.controller;
 
-import com.example.post.common.JwtTokenProvider;
+import com.example.post.common.auth.JwtTokenProvider;
 import com.example.post.member.domain.Member;
 import com.example.post.member.dto.*;
 import com.example.post.member.service.MemberService;
@@ -25,25 +25,30 @@ public class MemberController {
     //    1. 회원가입
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody CreateDto dto){
-        memberService.save(dto); //이메일 찾아서 있으면 에러, 없으면 저장
-        return ResponseEntity.status(HttpStatus.CREATED).body("ok");
+        Long id =memberService.save(dto); //이메일 찾아서 있으면 에러, 없으면 저장
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
 //    2. user로그인
     @PostMapping("/doLogin")
-    public String login(@RequestBody LoginDto dto){
+    public String login(@RequestBody MemberLoginReqDto dto){
         Member member = memberService.login(dto);
 
-        String token =jwtTokenProvider.createToken(member);
-        return token;
+        String accessToken =jwtTokenProvider.createToken(member);
+//        refresh생성
+        MemberLoginResDto memberLoginResDto=MemberLoginResDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(null)
+                .build();
+        return accessToken;
     }
 
 
 //    3. 회원목록조회
     @GetMapping("/list")
     @PreAuthorize("hasRole('ADMIN')") //관리자만 조회할 수 있도록
-    public List<ListDto> list(){
-        List<ListDto> dto = memberService.findAll();
+    public List<MemberListDto> list(){
+        List<MemberListDto> dto = memberService.findAll();
         return dto;
     }
 
@@ -58,7 +63,7 @@ public class MemberController {
 
 //    5. 회원 상세내역조회
     @GetMapping("/detail/{id}")
-    public DetailDto detail(@PathVariable Long id){
+    public MemberDtailDto detail(@PathVariable Long id){
         return memberService.findById(id);
 
     }

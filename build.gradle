@@ -55,7 +55,7 @@ dependencies {
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 //Bath의존성 추가(Scheduler)
-        implementation 'org.springframework.boot:spring-boot-starter-batch'
+        implementation 'org.springframework.boot:spring-boot-starter-batch' //빼도 되고
 
         //    파일처리를 위한 aws 의존성 추가
         implementation 'software.amazon.awssdk:s3:2.29.50'

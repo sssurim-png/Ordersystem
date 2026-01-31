@@ -1,7 +1,7 @@
-package com.example.post.common;
+package com.example.post.common.configs;
 
-import com.example.post.common.handler.JwtAuthenticationHandler;
-import jakarta.servlet.http.HttpServlet;
+import com.example.post.common.auth.JwtTokenfilter;
+import com.example.post.common.exception.JwtAuthenticationHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import software.amazon.awssdk.services.s3.model.CORSConfiguration;
 
 import java.util.Arrays;
 
@@ -39,8 +38,8 @@ public class SecurityConfig {//체인설정, 쓸객체
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(a -> a.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtTokenfilter, UsernamePasswordAuthenticationFilter.class)// 토큰 검증작업 수행
-                .exceptionHandling(e-> e.authenticationEntryPoint(jwtAuthenticationHandler)) //핸들러?
-                .authorizeHttpRequests(a -> a.requestMatchers("/member/create", "/member/doLogin").permitAll().anyRequest().authenticated())//제외하는 부분
+                .exceptionHandling(e-> e.authenticationEntryPoint(jwtAuthenticationHandler))
+                .authorizeHttpRequests(a -> a.requestMatchers("/member/create", "/member/doLogin","/product/list").permitAll().anyRequest().authenticated())//제외하는 부분
                 .build();
     }
 
